@@ -11,7 +11,7 @@ update_interval = 100
 # Load the video
 cap = cv2.VideoCapture("Files/sample.mp4")
 
-avg = None
+initial = None
 
 # Star the loop for video
 index = 0
@@ -33,13 +33,13 @@ while True:
 		# blur the image
 		gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
-		# if the average frame is None, initialize it
-		if avg is None:
-			avg = gray.copy()
+		# intialise the initial frame
+		if initial is None:
+			initial = gray.copy()
 			continue
 
 		# compute the difference between the current frame and the average
-		frameDelta = cv2.absdiff(gray, avg)
+		frameDelta = cv2.absdiff(gray, initial)
 
 		# threshold the delta image
 		thresh = cv2.threshold(frameDelta, threshold, 255,
@@ -67,7 +67,7 @@ while True:
 		# update the average after few frames
 		if index % update_interval == 0:
 			print('Updating after frames', index)
-			avg = gray.copy()
+			initial = gray.copy()
 
 		# display the frame
 		cv2.imshow("Motion Dectection", frame)
