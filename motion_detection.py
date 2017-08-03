@@ -15,7 +15,7 @@ initial = None
 
 # Star the loop for video
 index = 0
-while True:
+while cap.isOpened():
 	# Keep track of frames with index
 	index += 1
 
